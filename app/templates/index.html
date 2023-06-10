@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indic Language Editor</title>
+</head>
+<body>
+    <h1>Indic Language Editor</h1>
+
+    <form method="POST" action="/">
+        <textarea name="text" rows="5" cols="50"></textarea>
+        <br>
+        <select name="lang">
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+            <option value="or">Oriya</option>
+            <option value="kn">Kannada</option>
+            <!-- Add more options for other Indic languages -->
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if sentences %}
+        <h2>Sentences:</h2>
+        <ul>
+            {% for sentence, edited in sentences %}
+                <li>
+                    <strong>Sentence {{ loop.index }}:</strong>
+                    {% if edited %}
+                        <span style="color: green;">[Edited]</span>
+                    {% endif %}
+                    {{ sentence }}
+                    <form method="POST" action="/edit">
+                        <input type="hidden" name="sentence_number" value="{{ loop.index }}">
+                        <input type="text" name="edited_sentence">
+                        <input type="submit" value="Edit">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
